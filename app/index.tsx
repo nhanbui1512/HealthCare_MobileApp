@@ -73,6 +73,7 @@ export default function Index() {
                   paddingVertical: 15,
                   paddingHorizontal: 30,
                   backgroundColor: "#000",
+                  borderRadius: 8,
                 }}
               >
                 <Text style={{ color: "#fff", textAlign: "center" }}>
