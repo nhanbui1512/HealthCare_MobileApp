@@ -1,7 +1,11 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+  const handleLogin = () => {
+    router.replace("/dashboard");
+  };
   return (
     <View style={{ paddingTop: 50 }}>
       <View
@@ -25,6 +29,7 @@ export default function Index() {
           </Text>
           <View style={{ paddingHorizontal: 20 }}>
             <TextInput
+              placeholderTextColor={"#888"}
               placeholder="Email"
               style={{
                 width: "100%",
@@ -35,12 +40,12 @@ export default function Index() {
                 paddingHorizontal: 20,
                 borderWidth: 1,
                 borderColor: "#ded2b8",
-                color: "rgb(58, 57, 103);",
                 marginBottom: 20,
               }}
             />
 
             <TextInput
+              placeholderTextColor={"#888"}
               placeholder="Password"
               style={{
                 width: "100%",
@@ -62,7 +67,7 @@ export default function Index() {
               </Link>
             </View>
 
-            <TouchableOpacity style={{ marginTop: 30 }}>
+            <TouchableOpacity onPress={handleLogin} style={{ marginTop: 30 }}>
               <View
                 style={{
                   paddingVertical: 15,

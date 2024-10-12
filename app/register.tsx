@@ -10,7 +10,7 @@ export default function Register() {
           paddingHorizontal: 20,
           display: "flex",
           justifyContent: "center",
-          marginTop: 100,
+          marginTop: 50,
         }}
       >
         <View
@@ -24,6 +24,8 @@ export default function Register() {
             SIGN UP
           </Text>
           <View style={{ paddingHorizontal: 20 }}>
+            <Text style={{ marginLeft: 20, marginBottom: 10 }}>User name</Text>
+
             <TextInput
               placeholder="Username"
               style={{
@@ -39,7 +41,7 @@ export default function Register() {
                 marginBottom: 20,
               }}
             />
-
+            <Text style={{ marginLeft: 20, marginBottom: 10 }}>Email</Text>
             <TextInput
               placeholder="Email"
               style={{
@@ -55,6 +57,7 @@ export default function Register() {
                 marginBottom: 20,
               }}
             />
+            <Text style={{ marginLeft: 20, marginBottom: 10 }}>Password</Text>
 
             <TextInput
               placeholder="Password"
@@ -71,7 +74,9 @@ export default function Register() {
                 marginBottom: 20,
               }}
             />
-
+            <Text style={{ marginLeft: 20, marginBottom: 10 }}>
+              Confirm password
+            </Text>
             <TextInput
               placeholder="Confirm password"
               style={{
