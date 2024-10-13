@@ -55,17 +55,8 @@ export default function Dashboard() {
           paddingHorizontal: 20,
         }}
       >
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
-        <DeviceItem />
+        <DeviceItem name="GrandMother" devicename="Arduino" />
+        <DeviceItem name="GrandFather" devicename="Esp8266" />
       </ScrollView>
     </View>
   );

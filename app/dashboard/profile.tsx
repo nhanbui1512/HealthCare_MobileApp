@@ -116,7 +116,7 @@ export default function Profile() {
       )}
 
       <View style={{ marginTop: 10 }}>
-        <Text style={{ fontSize: 18 }}>Email : buithiennhan0345@gmail.com</Text>
+        <Text style={{ fontSize: 18 }}>Email: user@gmail.com</Text>
       </View>
 
       <View
