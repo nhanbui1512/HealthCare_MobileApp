@@ -1,10 +1,32 @@
+import { Login } from "@/services/api/auth";
 import { Link, useRouter } from "expo-router";
+import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
   const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleLogin = () => {
-    router.replace("/dashboard");
+    const storeToken = async (token: string) => {
+      try {
+        await AsyncStorage.setItem("accessToken", token);
+      } catch (error) {
+        console.log("Lưu token thất bại", error);
+      }
+    };
+
+    Login({ email: email, password: password })
+      .then((res) => {
+        storeToken(res.user?.token);
+        router.replace("/dashboard");
+      })
+      .catch((err) => {
+        alert("Email or password incorrect");
+      });
   };
   return (
     <View style={{ paddingTop: 50 }}>
@@ -29,6 +51,8 @@ export default function Index() {
           </Text>
           <View style={{ paddingHorizontal: 20 }}>
             <TextInput
+              value={email}
+              onChangeText={(value) => setEmail(value)}
               placeholderTextColor={"#888"}
               placeholder="Email"
               style={{
@@ -45,6 +69,8 @@ export default function Index() {
             />
 
             <TextInput
+              value={password}
+              onChangeText={(value) => setPassword(value)}
               placeholderTextColor={"#888"}
               placeholder="Password"
               style={{

@@ -1,10 +1,38 @@
+import { getProfile } from "@/services/api/auth";
 import { Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 
+interface profileData {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
 export default function Profile() {
   const [updateMode, setUpdateMode] = useState(false);
   const [userName, setUserName] = useState("Nhan Bui");
+  const [userData, setUserData] = useState({
+    _id: "",
+    name: "",
+    email: "",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    __v: 0,
+  });
+
+  useEffect(() => {
+    getProfile()
+      .then((res) => {
+        setUserData(res.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <View
@@ -53,7 +81,7 @@ export default function Profile() {
               textAlign: "center",
             }}
           >
-            {userName}
+            {userData.name}
           </Text>
 
           <TouchableOpacity onPress={() => setUpdateMode(true)}>
@@ -116,7 +144,7 @@ export default function Profile() {
       )}
 
       <View style={{ marginTop: 10 }}>
-        <Text style={{ fontSize: 18 }}>Email: user@gmail.com</Text>
+        <Text style={{ fontSize: 18 }}>Email: {userData.email}</Text>
       </View>
 
       <View
