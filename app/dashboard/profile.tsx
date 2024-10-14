@@ -1,28 +1,26 @@
 import { getProfile } from "@/services/api/auth";
-import { Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
+import {
+  Entypo,
+  Feather,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-interface profileData {
+type UserData = {
   _id: string;
   name: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
-}
+};
 export default function Profile() {
-  const [updateMode, setUpdateMode] = useState(false);
-  const [userName, setUserName] = useState("Nhan Bui");
-  const [userData, setUserData] = useState({
-    _id: "",
-    name: "",
-    email: "",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    __v: 0,
-  });
+  const [updateMode, setUpdateMode] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserData | undefined>();
 
   useEffect(() => {
     getProfile()
@@ -33,6 +31,16 @@ export default function Profile() {
         console.log(err);
       });
   }, []);
+
+  const handleLogout = () => {
+    AsyncStorage.removeItem("accessToken")
+      .then(() => {
+        router.replace("/");
+      })
+      .catch((err) => {
+        alert("Something is error");
+      });
+  };
 
   return (
     <View
@@ -81,7 +89,7 @@ export default function Profile() {
               textAlign: "center",
             }}
           >
-            {userData.name}
+            {userData?.name}
           </Text>
 
           <TouchableOpacity onPress={() => setUpdateMode(true)}>
@@ -103,9 +111,17 @@ export default function Profile() {
         >
           <TextInput
             onChangeText={(value) => {
-              setUserName(value);
+              setUserData((prev) => {
+                if (prev) {
+                  return {
+                    ...prev,
+                    name: value,
+                  };
+                }
+                return prev;
+              });
             }}
-            value={userName}
+            value={userData?.name}
             placeholderTextColor={"#888"}
             style={{
               textAlign: "center",
@@ -144,7 +160,7 @@ export default function Profile() {
       )}
 
       <View style={{ marginTop: 10 }}>
-        <Text style={{ fontSize: 18 }}>Email: {userData.email}</Text>
+        <Text style={{ fontSize: 18 }}>Email: {userData?.email}</Text>
       </View>
 
       <View
@@ -211,6 +227,34 @@ export default function Profile() {
                 }}
               >
                 Password
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleLogout}>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 20,
+              backgroundColor: "#186efb",
+              paddingVertical: 6,
+              paddingHorizontal: 32,
+              borderRadius: 6,
+            }}
+          >
+            <MaterialCommunityIcons name="logout" size={30} color={"white"} />
+            <View style={{ display: "flex", flexDirection: "row", gap: 4 }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                Logout
               </Text>
             </View>
           </View>

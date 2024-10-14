@@ -1,7 +1,13 @@
-import { Login } from "@/services/api/auth";
+import { getProfile, Login } from "@/services/api/auth";
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
@@ -9,6 +15,7 @@ export default function Index() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
   const handleLogin = () => {
     const storeToken = async (token: string) => {
@@ -28,7 +35,28 @@ export default function Index() {
         alert("Email or password incorrect");
       });
   };
+
+  useEffect(() => {
+    getProfile()
+      .then(() => {
+        router.replace("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
   return (
+    // getProfile api to check accessToken then return Navigate
+
     <View style={{ paddingTop: 50 }}>
       <View
         style={{
@@ -69,6 +97,7 @@ export default function Index() {
             />
 
             <TextInput
+              secureTextEntry={true}
               value={password}
               onChangeText={(value) => setPassword(value)}
               placeholderTextColor={"#888"}
