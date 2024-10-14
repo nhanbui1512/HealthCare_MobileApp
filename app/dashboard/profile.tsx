@@ -8,7 +8,14 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 type UserData = {
   _id: string;
@@ -33,13 +40,29 @@ export default function Profile() {
   }, []);
 
   const handleLogout = () => {
-    AsyncStorage.removeItem("accessToken")
-      .then(() => {
-        router.replace("/");
-      })
-      .catch((err) => {
-        alert("Something is error");
-      });
+    showAlert();
+  };
+
+  const showAlert = () => {
+    Alert.alert("Confirm", "Are you sure logout application ?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Đã hủy"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          AsyncStorage.removeItem("accessToken")
+            .then(() => {
+              router.replace("/");
+            })
+            .catch((err) => {
+              alert("Something is error");
+            });
+        },
+      },
+    ]);
   };
 
   return (
