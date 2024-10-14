@@ -1,7 +1,40 @@
 import { Link } from "expo-router";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import * as Notifications from "expo-notifications";
+
+// First, set the handler that will cause the notification
+// to show the alert
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+// Second, call the method
 
 export default function AddDevice() {
+  const handlePushNotify = () => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
+    // Second, call the method
+
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Look at that notification",
+        body: "I'm so proud of myself!",
+      },
+      trigger: null,
+    });
+  };
   return (
     <View>
       <View
@@ -76,7 +109,10 @@ export default function AddDevice() {
               }}
             />
 
-            <TouchableOpacity style={{ marginTop: 30 }}>
+            <TouchableOpacity
+              onPress={handlePushNotify}
+              style={{ marginTop: 30 }}
+            >
               <View
                 style={{
                   paddingVertical: 15,

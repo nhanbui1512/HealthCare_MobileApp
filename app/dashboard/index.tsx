@@ -1,6 +1,7 @@
 import DeviceItem from "@/components/DeviceItem";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 export default function Dashboard() {
