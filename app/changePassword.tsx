@@ -1,7 +1,35 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
+import React, { useState } from "react";
+import { updatePassword } from "@/services/api/auth";
+import { useRouter } from "expo-router";
 
 export default function changePassword() {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    if (newPassword !== confirmPassword) {
+      return Alert.alert("Error", "Confirm password does not match");
+    }
+
+    updatePassword({ oldPassword: oldPassword, newPassword: newPassword })
+      .then((res) => {
+        Alert.alert("Sucess", "Updated password");
+        router.push("/dashboard/profile");
+      })
+      .catch((err) => {
+        Alert.alert("Error", "Old password is incorrect");
+      })
+      .finally(() => {
+        setOldPassword("");
+        setConfirmPassword("");
+        setNewPassword("");
+      });
+  };
+
   return (
     <View style={{}}>
       <View
@@ -26,6 +54,8 @@ export default function changePassword() {
             </Text>
 
             <TextInput
+              value={oldPassword}
+              onChangeText={(value) => setOldPassword(value)}
               secureTextEntry={true}
               style={{
                 width: "100%",
@@ -44,6 +74,8 @@ export default function changePassword() {
               New password
             </Text>
             <TextInput
+              value={newPassword}
+              onChangeText={(value) => setNewPassword(value)}
               secureTextEntry={true}
               style={{
                 width: "100%",
@@ -63,6 +95,8 @@ export default function changePassword() {
             </Text>
 
             <TextInput
+              value={confirmPassword}
+              onChangeText={(value) => setConfirmPassword(value)}
               secureTextEntry={true}
               style={{
                 width: "100%",
@@ -78,7 +112,7 @@ export default function changePassword() {
               }}
             />
 
-            <TouchableOpacity style={{ marginTop: 30 }}>
+            <TouchableOpacity onPress={handleSubmit} style={{ marginTop: 30 }}>
               <View
                 style={{
                   paddingVertical: 15,

@@ -25,3 +25,20 @@ export async function getProfile() {
     throw error;
   }
 }
+
+type FormChangePass = {
+  oldPassword: string;
+  newPassword: string;
+};
+
+export async function updatePassword(data: FormChangePass) {
+  try {
+    const response = await request.put("/auth/password", {
+      oldPassword: data.oldPassword,
+      newPassword: data.newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
