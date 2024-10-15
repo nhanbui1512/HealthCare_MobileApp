@@ -1,10 +1,13 @@
 import { Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
+import { Link, useNavigation, useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Profile() {
   const [updateMode, setUpdateMode] = useState(false);
   const [userName, setUserName] = useState("Nhan Bui");
+
+  const navigate = useNavigation();
 
   return (
     <View
@@ -160,7 +163,7 @@ export default function Profile() {
           </View>
         </View>
 
-        <TouchableOpacity>
+        <Link href={"/changePassword"}>
           <View
             style={{
               display: "flex",
@@ -186,7 +189,7 @@ export default function Profile() {
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Link>
       </View>
     </View>
   );

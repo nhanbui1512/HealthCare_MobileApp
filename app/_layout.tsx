@@ -76,6 +76,14 @@ export default function RootLayout() {
         }}
         name="detailDevice"
       />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerBackTitle: "Profile",
+          title: "Change Password",
+        }}
+        name="changePassword"
+      />
     </Stack>
   );
 }
