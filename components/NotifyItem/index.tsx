@@ -2,7 +2,30 @@ import { View, Text } from "react-native";
 import React from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 
-export default function NotifyItem() {
+type Device = {
+  _id: string;
+  user_id: string;
+  device_name: string;
+  device_type: string;
+  serial_number: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+};
+
+type Notify = {
+  _id: string;
+  user_id: string;
+  alert_type: string;
+  handled: boolean;
+  content: string;
+  createdAt: Date;
+  updateAt: Date;
+  __v: number;
+  device_id: Device;
+};
+
+export default function NotifyItem({ data }: { data: Notify }) {
   return (
     <View
       style={{
@@ -32,7 +55,7 @@ export default function NotifyItem() {
 
       <View style={{ width: "80%" }}>
         <Text style={{ fontSize: 18, flexWrap: "wrap", fontWeight: "500" }}>
-          You ranked up and now you are a Master{" "}
+          {data.content}
         </Text>
         <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
           <Entypo name="arrow-up" size={18} color={"#fac774"} />
