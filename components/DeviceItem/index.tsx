@@ -1,17 +1,32 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import { Image, Text, View } from "react-native";
 import styles from "./styles";
 import { Link } from "expo-router";
 
-interface Device {
+type User = {
+  _id: string;
   name: string;
-  devicename: string;
-  isActive?: boolean; // Thuộc tính tùy chọn
-}
-export default function DeviceItem(device: Device) {
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+type Device = {
+  _id: string;
+  device_name: string;
+  device_type: string;
+  serial_number: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  user: User;
+};
+
+export default function DeviceItem(data: Device) {
   return (
-    <Link href={"/detailDevice"}>
+    <Link href={`/detailDevice/${data._id}`}>
       <View
         style={{
           padding: 10,
@@ -65,9 +80,9 @@ export default function DeviceItem(device: Device) {
           >
             <View>
               <Text style={{ fontWeight: "600", fontSize: 18 }}>
-                {device.name}
+                {data.device_name}
               </Text>
-              <Text>{device.devicename}</Text>
+              <Text>{data.device_type}</Text>
             </View>
             <View style={{ paddingHorizontal: 8 }}>
               <AntDesign name="right" size={24} />

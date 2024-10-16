@@ -1,10 +1,42 @@
 import DeviceItem from "@/components/DeviceItem";
+import { getDevices } from "@/services/api/device";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+type Device = {
+  _id: string;
+  device_name: string;
+  device_type: string;
+  serial_number: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  user: User;
+};
+
 export default function Dashboard() {
+  const [devices, setDevices] = useState<Device[]>();
+
+  useEffect(() => {
+    getDevices()
+      .then((res) => {
+        setDevices(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <View
       style={{
@@ -56,8 +88,9 @@ export default function Dashboard() {
           paddingHorizontal: 20,
         }}
       >
-        <DeviceItem name="GrandMother" devicename="Arduino" />
-        <DeviceItem name="GrandFather" devicename="Esp8266" />
+        {devices?.map((item, index) => (
+          <DeviceItem key={index} {...item} />
+        ))}
       </ScrollView>
     </View>
   );

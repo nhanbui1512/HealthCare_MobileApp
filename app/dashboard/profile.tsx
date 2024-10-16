@@ -47,7 +47,7 @@ export default function Profile() {
     Alert.alert("Confirm", "Are you sure logout application ?", [
       {
         text: "Cancel",
-        onPress: () => console.log("Đã hủy"),
+        onPress: () => {},
         style: "cancel",
       },
       {
