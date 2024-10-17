@@ -1,5 +1,6 @@
 import DeviceItem from "@/components/DeviceItem";
 import { getDevices } from "@/services/api/device";
+import { registerService } from "@/utils/pushnotification";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
@@ -29,6 +30,9 @@ export default function Dashboard() {
   const [devices, setDevices] = useState<Device[]>();
 
   useEffect(() => {
+    const token = registerService();
+    console.log(token);
+
     getDevices()
       .then((res) => {
         setDevices(res);
