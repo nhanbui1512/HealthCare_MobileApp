@@ -36,6 +36,5 @@ export async function registerService() {
   const token = await Notifications.getExpoPushTokenAsync({
     projectId,
   });
-  console.log(token);
   return token.data;
 }
