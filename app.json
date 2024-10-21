@@ -13,12 +13,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.example.app",
+      "config": {
+        "usesNonExemptEncryption": false,
+        "googleServicesFile": "./GoogleService-Info.plist"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "extra": {
+        "eas": {
+          "projectId": "8350e517-f47b-4400-a328-80d4a676e713"
+        }
       }
     },
     "web": {

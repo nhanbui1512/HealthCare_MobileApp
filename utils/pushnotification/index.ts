@@ -1,6 +1,8 @@
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 
+import { getExpoPushTokenAsync } from "expo-notifications";
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -27,9 +29,7 @@ export async function registerService() {
 
   if (finalStatus !== "granted") return;
 
-  const projectId =
-    Constants?.expoConfig?.extra?.eas?.projectId ??
-    Constants?.easConfig?.projectId;
+  const projectId = "8350e517-f47b-4400-a328-80d4a676e713";
 
   if (!projectId) return;
 
@@ -38,3 +38,11 @@ export async function registerService() {
   });
   return token.data;
 }
+
+// export async function getPushToken() {
+//   const { data: token } = await getExpoPushTokenAsync({
+//     projectId: "8350e517-f47b-4400-a328-80d4a676e713",
+//   });
+//   console.log(token);
+//   return token;
+// }

@@ -2,6 +2,10 @@ import DeviceItem from "@/components/DeviceItem";
 import { getDevices } from "@/services/api/device";
 import { registerService } from "@/utils/pushnotification";
 import { AntDesign } from "@expo/vector-icons";
+import {
+  addNotificationReceivedListener,
+  addNotificationResponseReceivedListener,
+} from "expo-notifications";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -30,9 +34,6 @@ export default function Dashboard() {
   const [devices, setDevices] = useState<Device[]>();
 
   useEffect(() => {
-    const token = registerService();
-    console.log(token);
-
     getDevices()
       .then((res) => {
         setDevices(res);
@@ -40,6 +41,14 @@ export default function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
+
+    // addNotificationReceivedListener((notification) => {
+    //   console.log(notification);
+    // });
+
+    // addNotificationResponseReceivedListener((response) => {
+    //   console.log(response);
+    // });
   }, []);
   return (
     <View
