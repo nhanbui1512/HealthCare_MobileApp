@@ -1,6 +1,5 @@
 import NotifyItem from "@/components/NotifyItem";
 import { getNotifications } from "@/services/api/notifications";
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
@@ -28,7 +27,7 @@ type Notify = {
 };
 
 export default function Notification({ message: string } = { message: "" }) {
-  const [notifications, setNotifications] = useState<Notify[]>();
+  const [notifications, setNotifications] = useState<Notify[]>([]);
 
   useEffect(() => {
     getNotifications(1, 10)
@@ -39,6 +38,17 @@ export default function Notification({ message: string } = { message: "" }) {
         console.log(err);
       });
   }, []);
+
+  const handleDeleted = (id: string) => {
+    setNotifications((prevNotifications) => {
+      // Lọc ra các thông báo không có id trùng với id được truyền vào
+      const newState: Notify[] = prevNotifications.filter(
+        (notification) => notification._id !== id
+      );
+      return newState; // Trả về mảng mới
+    });
+  };
+
   return (
     <View>
       <View
@@ -62,7 +72,7 @@ export default function Notification({ message: string } = { message: "" }) {
       >
         <View style={{ paddingTop: 10, paddingBottom: 80 }}>
           {notifications?.map((item, index) => (
-            <NotifyItem key={index} data={item} />
+            <NotifyItem onDeleted={handleDeleted} key={index} data={item} />
           ))}
         </View>
       </ScrollView>

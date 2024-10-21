@@ -10,3 +10,12 @@ export async function getNotifications(page: number, perPage: number) {
     throw error;
   }
 }
+
+export async function deleteNotification(id: string) {
+  try {
+    const response = await request.delete(`/notifications?notify_id=${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
