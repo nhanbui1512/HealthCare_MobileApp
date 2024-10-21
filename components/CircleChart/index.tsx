@@ -1,3 +1,4 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
@@ -112,7 +113,7 @@ const CircleChart = ({ percent = 0 }: IProps) => {
         }}
       >
         <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
-          Performance
+          Oxygen concentration
         </Text>
         <View style={{ padding: 20, alignItems: "center" }}>
           <PieChart
