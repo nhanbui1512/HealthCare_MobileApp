@@ -1,17 +1,32 @@
 import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
-const CircleChart = () => {
+type IProps = {
+  percent?: number;
+};
+
+function classifyOxygenLevel(oxygenLevel: number): string {
+  if (oxygenLevel >= 96 && oxygenLevel <= 100) {
+    return "Excellent";
+  } else if (oxygenLevel >= 90 && oxygenLevel < 96) {
+    return "Good";
+  } else if (oxygenLevel >= 80 && oxygenLevel < 90) {
+    return "Okay";
+  } else {
+    return "Poor";
+  }
+}
+
+const CircleChart = ({ percent = 0 }: IProps) => {
+  const classifyData = classifyOxygenLevel(percent);
   const pieData = [
     {
-      value: 47,
+      value: percent,
       color: "#009FFF",
       gradientCenterColor: "#006DFF",
       focused: true,
     },
-    { value: 40, color: "#93FCF8", gradientCenterColor: "#3BE9DE" },
-    { value: 16, color: "#BDB2FA", gradientCenterColor: "#8F80F3" },
-    { value: 3, color: "#FFA5BA", gradientCenterColor: "#FF7F97" },
+    { value: 100 - percent, color: "#93FCF8", gradientCenterColor: "#3BE9DE" },
   ];
 
   const renderDot = (color: string) => {
@@ -47,13 +62,13 @@ const CircleChart = () => {
             }}
           >
             {renderDot("#006DFF")}
-            <Text style={{ color: "white" }}>Excellent: 47%</Text>
+            <Text style={{ color: "white" }}>Excellent: 96%</Text>
           </View>
           <View
             style={{ flexDirection: "row", alignItems: "center", width: 120 }}
           >
-            {renderDot("#8F80F3")}
-            <Text style={{ color: "white" }}>Okay: 16%</Text>
+            {renderDot("#006DFF")}
+            <Text style={{ color: "white" }}>Good: 90%</Text>
           </View>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -65,14 +80,14 @@ const CircleChart = () => {
               marginRight: 20,
             }}
           >
-            {renderDot("#3BE9DE")}
-            <Text style={{ color: "white" }}>Good: 40%</Text>
+            {renderDot("#006DFF")}
+            <Text style={{ color: "white" }}>Okay: 80% - 90%</Text>
           </View>
           <View
             style={{ flexDirection: "row", alignItems: "center", width: 120 }}
           >
-            {renderDot("#FF7F97")}
-            <Text style={{ color: "white" }}>Poor: 3%</Text>
+            {renderDot("#006DFF")}
+            <Text style={{ color: "white" }}>Poor: under 80%</Text>
           </View>
         </View>
       </>
@@ -116,10 +131,10 @@ const CircleChart = () => {
                   <Text
                     style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
                   >
-                    47%
+                    {percent}%
                   </Text>
                   <Text style={{ fontSize: 14, color: "white" }}>
-                    Excellent
+                    {classifyData}
                   </Text>
                 </View>
               );

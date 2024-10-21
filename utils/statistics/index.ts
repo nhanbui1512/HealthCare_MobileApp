@@ -19,3 +19,29 @@ export function formatWeekData(data: Record<string, number>): WeekDataItem[] {
 
   return result;
 }
+
+type DataHeart = {
+  _id: string;
+  user_id: string;
+  device_id: string;
+  heart_rate: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+type DataEntry = {
+  day: number;
+  records: DataHeart[];
+  average: number;
+};
+
+export function formatMonthData(data: DataEntry[]): WeekDataItem[] {
+  return data?.map((item) => {
+    return {
+      label: item.day.toString(),
+      value: item.average,
+      fontColor: "#177AD5",
+    };
+  });
+}
