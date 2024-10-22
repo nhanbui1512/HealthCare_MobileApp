@@ -49,6 +49,15 @@ export default function Notification({ message: string } = { message: "" }) {
     });
   };
 
+  const handleReaded = (id: string) => {
+    setNotifications((prev) => {
+      const newState: Notify[] = [...prev];
+      const notify = newState.find((item) => item._id === id);
+      if (notify) notify.handled = true;
+      return newState;
+    });
+  };
+
   return (
     <View>
       <View
@@ -70,9 +79,22 @@ export default function Notification({ message: string } = { message: "" }) {
           flexDirection: "column",
         }}
       >
-        <View style={{ paddingTop: 10, paddingBottom: 80 }}>
+        <View
+          style={{
+            paddingTop: 10,
+            paddingBottom: 80,
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}
+        >
           {notifications?.map((item, index) => (
-            <NotifyItem onDeleted={handleDeleted} key={index} data={item} />
+            <NotifyItem
+              onReaded={handleReaded}
+              onDeleted={handleDeleted}
+              key={index}
+              data={item}
+            />
           ))}
         </View>
       </ScrollView>

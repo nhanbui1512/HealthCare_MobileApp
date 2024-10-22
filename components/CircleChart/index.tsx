@@ -4,6 +4,7 @@ import { PieChart } from "react-native-gifted-charts";
 
 type IProps = {
   percent?: number;
+  fromNowOn?: string;
 };
 
 function classifyOxygenLevel(oxygenLevel: number): string {
@@ -18,7 +19,7 @@ function classifyOxygenLevel(oxygenLevel: number): string {
   }
 }
 
-const CircleChart = ({ percent = 0 }: IProps) => {
+const CircleChart = ({ percent = 0, fromNowOn = "" }: IProps) => {
   const classifyData = classifyOxygenLevel(percent);
   const pieData = [
     {
@@ -141,6 +142,8 @@ const CircleChart = ({ percent = 0 }: IProps) => {
               );
             }}
           />
+
+          <Text style={{ color: "white", marginTop: 20 }}>{fromNowOn}</Text>
         </View>
         {renderLegendComponent()}
       </View>

@@ -27,3 +27,14 @@ export async function getDataInMonth(data: Data) {
     throw error;
   }
 }
+
+export async function getLatestOxygen(id: string) {
+  try {
+    const response = await request.get(
+      `/heart-rates?deviceId=${id}&type=latest`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

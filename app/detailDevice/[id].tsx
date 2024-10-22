@@ -5,7 +5,11 @@ import styles from "@/components/DeviceItem/styles";
 import CircleChart from "@/components/CircleChart";
 import moment from "moment";
 import { useLocalSearchParams } from "expo-router";
-import { getDataInMonth, getDataInWeek } from "@/services/statistics";
+import {
+  getDataInMonth,
+  getDataInWeek,
+  getLatestOxygen,
+} from "@/services/statistics";
 import { formatMonthData, formatWeekData } from "@/utils/statistics";
 
 type WeekDataItem = {
@@ -14,11 +18,24 @@ type WeekDataItem = {
   frontColor?: string; // Optional frontColor property
 };
 
+type HeartAndOxy = {
+  _id: string;
+  user_id: string;
+  device_id: string;
+  heart_rate: number;
+  oxygen: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  fromNowOn: string;
+};
+
 export default function DetailDevice() {
   const { id } = useLocalSearchParams();
 
   const [dataWeek, setDataWeek] = useState<WeekDataItem[]>([]);
   const [dataMonth, setDataMonth] = useState<WeekDataItem[]>([]);
+  const [oxygenData, setOxygenData] = useState<HeartAndOxy>();
 
   useEffect(() => {
     const date = new Date();
@@ -44,6 +61,14 @@ export default function DetailDevice() {
       .then((res) => {
         const formatedData = formatMonthData(res.data);
         setDataMonth(formatedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getLatestOxygen(id.toString())
+      .then((res) => {
+        setOxygenData(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -101,7 +126,10 @@ export default function DetailDevice() {
         </View>
 
         <View style={{ marginTop: 40 }}>
-          <CircleChart percent={20} />
+          <CircleChart
+            percent={oxygenData?.oxygen}
+            fromNowOn={oxygenData?.fromNowOn}
+          />
         </View>
       </View>
     </ScrollView>

@@ -19,3 +19,12 @@ export async function deleteNotification(id: string) {
     throw error;
   }
 }
+
+export async function readNotification(id: string) {
+  try {
+    const response = await request.patch(`/notifications?notify_id=${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
