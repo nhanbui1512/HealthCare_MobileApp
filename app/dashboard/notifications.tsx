@@ -20,6 +20,7 @@ type Notify = {
   alert_type: string;
   handled: boolean;
   content: string;
+  fromNowOn: string;
   createdAt: Date;
   updateAt: Date;
   __v: number;

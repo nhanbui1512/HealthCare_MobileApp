@@ -25,6 +25,7 @@ type Notify = {
   content: string;
   createdAt: Date;
   updateAt: Date;
+  fromNowOn: string;
   __v: number;
   device_id: Device;
 };
@@ -103,7 +104,7 @@ export default function NotifyItem({
               style={{ display: "flex", flexDirection: "row", marginTop: 10 }}
             >
               <Entypo name="arrow-up" size={18} color={"#fac774"} />
-              <Text>2 days ago</Text>
+              <Text>{data.fromNowOn}</Text>
             </View>
           </View>
         </View>
