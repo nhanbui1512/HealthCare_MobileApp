@@ -1,4 +1,4 @@
-import { getProfile } from "@/services/api/auth";
+import { getProfile, updateProfile } from "@/services/api/auth";
 import {
   Entypo,
   Feather,
@@ -63,6 +63,18 @@ export default function Profile() {
         },
       },
     ]);
+  };
+
+  const handleUpdateProfile = () => {
+    updateProfile(userData?.name || "")
+      .then((res) => {
+        setUpdateMode(false);
+        Alert.alert("Sucess", "Updated profile Succesfully");
+      })
+      .catch((err) => {
+        Alert.alert("Fail", "Updated profile Unsuccessfully");
+        console.log(err);
+      });
   };
 
   const navigate = useNavigation();
@@ -163,7 +175,7 @@ export default function Profile() {
             }}
           />
 
-          <TouchableOpacity onPress={() => setUpdateMode(false)}>
+          <TouchableOpacity onPress={handleUpdateProfile}>
             <View
               style={{
                 height: 40,

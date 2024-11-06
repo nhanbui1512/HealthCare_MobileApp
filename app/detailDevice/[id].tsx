@@ -86,6 +86,12 @@ export default function DetailDevice() {
         }}
       >
         <View style={{ marginBottom: 20 }}>
+          <CircleChart
+            percent={oxygenData?.oxygen}
+            fromNowOn={oxygenData?.fromNowOn}
+          />
+        </View>
+        <View style={{ marginBottom: 20 }}>
           <View style={{ padding: 10, ...styles.box }}>
             <BarChart
               backgroundColor={"#fff"}
@@ -123,13 +129,6 @@ export default function DetailDevice() {
               Heart rates in a month
             </Text>
           </View>
-        </View>
-
-        <View style={{ marginTop: 40 }}>
-          <CircleChart
-            percent={oxygenData?.oxygen}
-            fromNowOn={oxygenData?.fromNowOn}
-          />
         </View>
       </View>
     </ScrollView>

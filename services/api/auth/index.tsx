@@ -42,3 +42,14 @@ export async function updatePassword(data: FormChangePass) {
     throw error;
   }
 }
+
+export async function updateProfile(userName: string) {
+  try {
+    const response = await request.patch("/auth/me", {
+      userName: userName,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
