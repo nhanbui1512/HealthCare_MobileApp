@@ -5,6 +5,7 @@ import { PieChart } from "react-native-gifted-charts";
 type IProps = {
   percent?: number;
   fromNowOn?: string;
+  heartRate?: number;
 };
 
 function classifyOxygenLevel(oxygenLevel: number): string {
@@ -19,7 +20,11 @@ function classifyOxygenLevel(oxygenLevel: number): string {
   }
 }
 
-const CircleChart = ({ percent = 0, fromNowOn = "" }: IProps) => {
+const CircleChart = ({
+  percent = 0,
+  fromNowOn = "",
+  heartRate = 0,
+}: IProps) => {
   const classifyData = classifyOxygenLevel(percent);
   const pieData = [
     {
@@ -134,6 +139,11 @@ const CircleChart = ({ percent = 0, fromNowOn = "" }: IProps) => {
                     style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
                   >
                     {percent}%
+                  </Text>
+                  <Text
+                    style={{ fontSize: 18, color: "white", fontWeight: "bold" }}
+                  >
+                    {heartRate} bpm
                   </Text>
                   <Text style={{ fontSize: 14, color: "white" }}>
                     {classifyData}

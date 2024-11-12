@@ -87,6 +87,7 @@ export default function DetailDevice() {
       >
         <View style={{ marginBottom: 20 }}>
           <CircleChart
+            heartRate={oxygenData?.heart_rate}
             percent={oxygenData?.oxygen}
             fromNowOn={oxygenData?.fromNowOn}
           />
