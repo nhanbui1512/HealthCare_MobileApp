@@ -1,6 +1,8 @@
 import { Link } from "expo-router";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import * as Notifications from "expo-notifications";
+import { useState } from "react";
+import { addDevice } from "@/services/api/device";
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -16,24 +18,43 @@ Notifications.setNotificationHandler({
 // Second, call the method
 
 export default function AddDevice() {
-  const handlePushNotify = () => {
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
-    });
+  const [deviceId, setDeviceId] = useState("");
+  const [deviceName, setDeviceName] = useState("");
+  const [deviceType, setDeviceType] = useState("");
 
-    // Second, call the method
+  // const handlePushNotify = () => {
+  //   Notifications.setNotificationHandler({
+  //     handleNotification: async () => ({
+  //       shouldShowAlert: true,
+  //       shouldPlaySound: false,
+  //       shouldSetBadge: false,
+  //     }),
+  //   });
 
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Look at that notification",
-        body: "I'm so proud of myself!",
-      },
-      trigger: null,
-    });
+  //   // Second, call the method
+
+  //   Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: "Look at that notification",
+  //       body: "I'm so proud of myself!",
+  //     },
+  //     trigger: null,
+  //   });
+  // };
+
+  const handleAddDevice = () => {
+    addDevice(deviceId, deviceName, deviceType)
+      .then((res) => {
+        alert("Create device successfully");
+      })
+      .catch((err) => {
+        alert(`Create device unsuccessfully`);
+      })
+      .finally(() => {
+        setDeviceId("");
+        setDeviceName("");
+        setDeviceType("");
+      });
   };
   return (
     <View>
@@ -57,6 +78,8 @@ export default function AddDevice() {
             <Text style={{ marginLeft: 20, marginBottom: 10 }}>Device id</Text>
 
             <TextInput
+              value={deviceId}
+              onChangeText={(text) => setDeviceId(text)}
               placeholder="66f6b573592797ae3c370198"
               style={{
                 width: "100%",
@@ -75,7 +98,9 @@ export default function AddDevice() {
               Device name
             </Text>
             <TextInput
-              placeholder="Arduino"
+              value={deviceName}
+              onChangeText={(text) => setDeviceName(text)}
+              placeholder="Thiết bị cảnh báo"
               style={{
                 width: "100%",
                 fontSize: 20,
@@ -89,12 +114,14 @@ export default function AddDevice() {
                 marginBottom: 20,
               }}
             />
-            <Text style={{ marginLeft: 20, marginBottom: 10 }}>
-              Serial Number
-            </Text>
 
+            <Text style={{ marginLeft: 20, marginBottom: 10 }}>
+              Device Type
+            </Text>
             <TextInput
-              placeholder="Serial number"
+              value={deviceType}
+              onChangeText={(text) => setDeviceType(text)}
+              placeholder="Esp-8266"
               style={{
                 width: "100%",
                 fontSize: 20,
@@ -110,7 +137,7 @@ export default function AddDevice() {
             />
 
             <TouchableOpacity
-              onPress={handlePushNotify}
+              onPress={handleAddDevice}
               style={{ marginTop: 30 }}
             >
               <View

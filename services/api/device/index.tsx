@@ -8,3 +8,20 @@ export async function getDevices() {
     throw error;
   }
 }
+
+export async function addDevice(
+  deviceId: string,
+  deviceName: string,
+  deviceType: string
+) {
+  try {
+    const response = await request.post(`/devices`, {
+      deviceName: deviceName,
+      deviceType: deviceType,
+      deviceId: deviceId,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
