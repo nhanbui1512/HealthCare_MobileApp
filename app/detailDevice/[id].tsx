@@ -4,13 +4,13 @@ import { BarChart, PieChart } from "react-native-gifted-charts";
 import styles from "@/components/DeviceItem/styles";
 import CircleChart from "@/components/CircleChart";
 import moment from "moment";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import {
   getDataInMonth,
   getDataInWeek,
   getLatestOxygen,
 } from "@/services/statistics";
-import { formatMonthData, formatWeekData } from "@/utils/statistics";
+import { formatMonthData, formatWeekData, months } from "@/utils/statistics";
 
 type WeekDataItem = {
   value: number;
@@ -37,12 +37,12 @@ export default function DetailDevice() {
   const [dataMonth, setDataMonth] = useState<WeekDataItem[]>([]);
   const [oxygenData, setOxygenData] = useState<HeartAndOxy>();
 
-  useEffect(() => {
-    const date = new Date();
-    const dateNow = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
+  const date = new Date();
+  const dateNow = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
 
+  useEffect(() => {
     getDataInWeek(dateNow, id.toString())
       .then((res) => {
         const chartData = formatWeekData(res.data);
@@ -75,63 +75,70 @@ export default function DetailDevice() {
       });
   }, []);
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          paddingTop: 30,
-          paddingHorizontal: 20,
-          paddingBottom: 80,
+    <>
+      <Stack.Screen
+        options={{
+          title: "Detail device",
         }}
-      >
-        <View style={{ marginBottom: 20 }}>
-          <CircleChart
-            heartRate={oxygenData?.heart_rate}
-            percent={oxygenData?.oxygen}
-            fromNowOn={oxygenData?.fromNowOn}
-          />
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          <View style={{ padding: 10, ...styles.box }}>
-            <BarChart
-              backgroundColor={"#fff"}
-              width={300}
-              barWidth={22}
-              barBorderRadius={4}
-              frontColor="lightgray"
-              data={dataWeek}
-              yAxisThickness={0}
-              xAxisThickness={0}
+      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            paddingTop: 30,
+            paddingHorizontal: 20,
+            paddingBottom: 80,
+          }}
+        >
+          <View style={{ marginBottom: 20 }}>
+            <CircleChart
+              heartRate={oxygenData?.heart_rate}
+              percent={oxygenData?.oxygen}
+              fromNowOn={oxygenData?.fromNowOn}
             />
           </View>
-          <View style={{ marginTop: 16 }}>
-            <Text style={{ textAlign: "center", fontSize: 18 }}>
-              Heart rates average in a week
-            </Text>
+          <View style={{ marginBottom: 20 }}>
+            <View style={{ padding: 10, ...styles.box }}>
+              <BarChart
+                backgroundColor={"#fff"}
+                width={300}
+                barWidth={22}
+                barBorderRadius={4}
+                frontColor="lightgray"
+                data={dataWeek}
+                yAxisThickness={0}
+                xAxisThickness={0}
+              />
+            </View>
+            <View style={{ marginTop: 16 }}>
+              <Text style={{ textAlign: "center", fontSize: 18 }}>
+                Heart rates average in a week
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <View>
-          <View style={{ padding: 10, ...styles.box }}>
-            <BarChart
-              backgroundColor={"#fff"}
-              width={300}
-              barWidth={10}
-              barBorderRadius={4}
-              frontColor="lightgray"
-              data={dataMonth}
-              yAxisThickness={0}
-              xAxisThickness={0}
-            />
-          </View>
-          <View style={{ marginTop: 16 }}>
-            <Text style={{ textAlign: "center", fontSize: 18 }}>
-              Heart rates in a month
-            </Text>
+          <View>
+            <View style={{ padding: 10, ...styles.box }}>
+              <BarChart
+                backgroundColor={"#fff"}
+                width={300}
+                barWidth={10}
+                barBorderRadius={4}
+                frontColor="lightgray"
+                data={dataMonth}
+                yAxisThickness={0}
+                xAxisThickness={0}
+              />
+            </View>
+            <View style={{ marginTop: 16 }}>
+              <Text style={{ textAlign: "center", fontSize: 18 }}>
+                {`Heart rates in ${months[date.getMonth()]}`}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 }

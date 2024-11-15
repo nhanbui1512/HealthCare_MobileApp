@@ -1,7 +1,8 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
+import HeartIcon from "./HeartIcon";
 type IProps = {
   percent?: number;
   fromNowOn?: string;
@@ -141,9 +142,9 @@ const CircleChart = ({
                     {percent}%
                   </Text>
                   <Text
-                    style={{ fontSize: 18, color: "white", fontWeight: "bold" }}
+                    style={{ fontSize: 16, color: "white", fontWeight: "bold" }}
                   >
-                    {heartRate} bpm
+                    {heartRate} bpm <HeartIcon />
                   </Text>
                   <Text style={{ fontSize: 14, color: "white" }}>
                     {classifyData}

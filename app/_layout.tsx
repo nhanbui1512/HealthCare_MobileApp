@@ -22,8 +22,8 @@ export default function RootLayout() {
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
+  const notificationListener = useRef<Notifications.EventSubscription>();
+  const responseListener = useRef<Notifications.EventSubscription>();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(
@@ -56,7 +56,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <Stack initialRouteName="login">
+    <Stack initialRouteName="index">
       <Stack.Screen options={{ headerShown: false }} name="index" />
       <Stack.Screen options={{ headerShown: false }} name="dashboard" />
       <Stack.Screen options={{ headerShown: false }} name="register" />
@@ -88,16 +88,16 @@ export default function RootLayout() {
   );
 }
 
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
-      data: { data: "goes here", test: { test1: "more data" } },
-    },
-    trigger: { seconds: 2 },
-  });
-}
+// async function schedulePushNotification() {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "You've got mail! 📬",
+//       body: "Here is the notification body",
+//       data: { data: "goes here", test: { test1: "more data" } },
+//     },
+//     trigger: { seconds: 2 },
+//   });
+// }
 
 async function registerForPushNotificationsAsync() {
   let token;

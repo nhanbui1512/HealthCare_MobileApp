@@ -64,7 +64,7 @@ export default function DeviceItem(data: Device) {
                 borderRadius: 100,
               }}
               source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/3567/3567018.png",
+                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSafg_7DOjlEhViRQT7Dn0BX7U9IJQzA4AHbw-F_AFZCwnZtD9sMAKo-Tkb09FX3ZnuPFE&usqp=CAU",
               }}
             />
           </View>

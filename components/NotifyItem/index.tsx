@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, Button, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import Modal from "react-native-modal";
@@ -92,7 +92,18 @@ export default function NotifyItem({
             alignItems: "center",
           }}
         >
-          <AntDesign name="warning" size={24} color={"#fff"} />
+          <Image
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: 100,
+            }}
+            source={{
+              uri: "https://www.shutterstock.com/image-vector/fall-warning-sign-symbol-illustration-260nw-666597244.jpg",
+            }}
+          />
+          {/* <AntDesign name="warning" size={24} color={"#fff"} /> */}
         </View>
 
         <View style={{ flex: 1 }}>
