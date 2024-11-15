@@ -28,11 +28,12 @@ type UserData = {
 export default function Profile() {
   const [updateMode, setUpdateMode] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData | undefined>();
-
+  const [deviceNumber, setDeviceNumber] = useState(0);
   useEffect(() => {
     getProfile()
       .then((res) => {
         setUserData(res.user);
+        setDeviceNumber(res.devices?.length || 0);
       })
       .catch((err) => {
         console.log(err);
@@ -228,7 +229,7 @@ export default function Profile() {
                 fontWeight: "bold",
               }}
             >
-              2
+              {deviceNumber}
             </Text>
             <Text
               style={{
